@@ -1,6 +1,7 @@
 package com.christu.springbootmall.service;
 
 import com.christu.springbootmall.constant.ProductCategory;
+import com.christu.springbootmall.dto.ProductQueryParams;
 import com.christu.springbootmall.dto.ProductRequest;
 import com.christu.springbootmall.model.Product;
 
@@ -11,5 +12,5 @@ public interface ProductService {
     Integer createProduct(ProductRequest productRequest);
     void updateProduct(Integer productId,ProductRequest productRequest);
     void deleteProduct(Integer productId);
-    List<Product> getProducts(ProductCategory category,String search);
+    List<Product> getProducts(ProductQueryParams productQueryParams);
 }
