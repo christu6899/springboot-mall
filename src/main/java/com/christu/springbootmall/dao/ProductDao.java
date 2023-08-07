@@ -1,5 +1,6 @@
 package com.christu.springbootmall.dao;
 
+import com.christu.springbootmall.constant.ProductCategory;
 import com.christu.springbootmall.dto.ProductRequest;
 import com.christu.springbootmall.model.Product;
 
@@ -13,5 +14,5 @@ public interface ProductDao {
 
     void deleteProduct(Integer productId);
 
-    List<Product> getProducts();
+    List<Product> getProducts(ProductCategory category,String search);
 }
