@@ -1,5 +1,6 @@
 package com.christu.springbootmall.controller;
 
+import com.christu.springbootmall.dto.UserLoginRequest;
 import com.christu.springbootmall.dto.UserRegisterRequest;
 import com.christu.springbootmall.model.User;
 import com.christu.springbootmall.service.UserServiec;
@@ -21,5 +22,9 @@ public class UserController {
         User user = userServiec.getUserById(userId);
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
-
+    @PostMapping("/users/login")
+    public ResponseEntity<User> login(@RequestBody UserLoginRequest userLoginRequest){
+        User user = userServiec.login(userLoginRequest);
+        return ResponseEntity.status(HttpStatus.OK).body(user);
+    }
 }

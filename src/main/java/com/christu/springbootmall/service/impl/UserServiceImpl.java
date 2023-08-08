@@ -1,6 +1,7 @@
 package com.christu.springbootmall.service.impl;
 
 import com.christu.springbootmall.dao.UserDao;
+import com.christu.springbootmall.dto.UserLoginRequest;
 import com.christu.springbootmall.dto.UserRegisterRequest;
 import com.christu.springbootmall.model.User;
 import com.christu.springbootmall.service.UserServiec;
@@ -34,5 +35,20 @@ public class UserServiceImpl implements UserServiec {
     @Override
     public User getUserById(Integer userId) {
         return userDao.getUserById(userId);
+    }
+
+    @Override
+    public User login(UserLoginRequest userLoginRequest) {
+        User user = userDao.getUserByEmail(userLoginRequest.getEmail());
+        if(user==null){
+            log.warn("該 email {} 不存在",userLoginRequest.getEmail());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        if(user.getPassword().equals(userLoginRequest.getPassword())){
+            return user;
+        }else{
+            log.warn("該 email {} 與密碼不符",userLoginRequest.getEmail());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 }
