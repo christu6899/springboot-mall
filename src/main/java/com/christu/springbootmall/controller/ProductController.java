@@ -23,7 +23,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/products/{productId}")
+    @GetMapping(value = "/products/{productId}",produces = {"application/json;charset=UTF-8"})
     public ResponseEntity<Product> getProduct(@PathVariable Integer productId){
         Product product = productService.getProductById(productId);
         if(product!=null){
@@ -32,14 +32,14 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
-    @PostMapping("/products")
+    @PostMapping(value = "/products",produces = {"application/json;charset=UTF-8"})
     public ResponseEntity<Product> createProduct(@RequestBody @Valid ProductRequest productRequest){
         Integer productId = productService.createProduct(productRequest);
         Product product = productService.getProductById(productId);
         return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
 
-    @PutMapping("/products/{productId}")
+    @PutMapping(value = "/products/{productId}",produces = {"application/json;charset=UTF-8"})
     public ResponseEntity<Product> updateProduct(@PathVariable Integer productId,@RequestBody @Valid ProductRequest productRequest){
         //check product already exist
         Product Product = productService.getProductById(productId);
@@ -52,13 +52,13 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body(updateProduct);
     }
 
-    @DeleteMapping("/products/{productId}")
+    @DeleteMapping(value = "/products/{productId}",produces = {"application/json;charset=UTF-8"})
     public ResponseEntity<?> deleteProduct(@PathVariable Integer productId){
         productService.deleteProduct(productId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @GetMapping("/products")
+    @GetMapping(value = "/products",produces = {"application/json;charset=UTF-8"})
     public ResponseEntity<Page<Product>> getProducts(
             //query condition
             @RequestParam(required = false) ProductCategory category,
@@ -86,7 +86,7 @@ public class ProductController {
         page.setLimit(limit);
         page.setOffset(offset);
         page.setTotal(total);
-        page.setResult(productList);
+        page.setResults(productList);
 
         return ResponseEntity.status(HttpStatus.OK).body(page);
     }

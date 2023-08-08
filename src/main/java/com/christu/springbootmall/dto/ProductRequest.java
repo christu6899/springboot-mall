@@ -11,7 +11,7 @@ public class ProductRequest {
     @NotNull
     private ProductCategory category;
     @NotNull
-    private String image_url;
+    private String imageUrl;
     @NotNull
     private Integer price;
     @NotNull
@@ -34,12 +34,12 @@ public class ProductRequest {
         this.category = category;
     }
 
-    public String getImage_url() {
-        return image_url;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImage_url(String image_url) {
-        this.image_url = image_url;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public Integer getPrice() {
