@@ -84,6 +84,19 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
+    public void updateStock(Integer productId, Integer stock) {
+        String sql ="UPDATE product SET stock = :stock,last_modified_date = :lastModifiedDate" +
+                " WHERE product_id=:productId";
+
+        Map<String,Object> map = new HashMap<>();
+        map.put("productId",productId);
+        map.put("stock",stock);
+        map.put("lastModifiedDate",new Date());
+
+        jdbcTemplate.update(sql,map);
+    }
+
+    @Override
     public void deleteProduct(Integer productId) {
         String sql = "DELETE FROM product where product_id = :productId";
 
@@ -127,7 +140,7 @@ public class ProductDaoImpl implements ProductDao {
         return total;
     }
 
-    private String addFilteringSql(String sql, Map<String,Object> map,ProductQueryParams productQueryParams){
+    private String addFilteringSql(String sql, Map<String,Object> map, ProductQueryParams productQueryParams){
         if(productQueryParams.getCategory()!=null){
             sql += " AND category = :category";
             map.put("category",productQueryParams.getCategory().name());
@@ -138,4 +151,6 @@ public class ProductDaoImpl implements ProductDao {
         }
         return sql;
     }
+
+
 }

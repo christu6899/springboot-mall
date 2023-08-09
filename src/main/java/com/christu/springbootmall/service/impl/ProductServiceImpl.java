@@ -1,6 +1,5 @@
 package com.christu.springbootmall.service.impl;
 
-import com.christu.springbootmall.constant.ProductCategory;
 import com.christu.springbootmall.dao.ProductDao;
 import com.christu.springbootmall.dto.ProductQueryParams;
 import com.christu.springbootmall.dto.ProductRequest;
