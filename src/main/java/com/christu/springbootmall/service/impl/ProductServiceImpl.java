@@ -5,8 +5,11 @@ import com.christu.springbootmall.dto.ProductQueryParams;
 import com.christu.springbootmall.dto.ProductRequest;
 import com.christu.springbootmall.model.Product;
 import com.christu.springbootmall.service.ProductService;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -21,7 +24,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Integer createProduct(ProductRequest productRequest) {
-        return productDao.createProduct(productRequest);
+
+        Integer productId = productDao.createProduct(productRequest);
+        if(productId==null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }else {
+            return productId;
+        }
     }
 
     @Override

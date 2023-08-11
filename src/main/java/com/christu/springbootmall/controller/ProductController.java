@@ -6,6 +6,10 @@ import com.christu.springbootmall.dto.ProductRequest;
 import com.christu.springbootmall.model.Product;
 import com.christu.springbootmall.service.ProductService;
 import com.christu.springbootmall.util.Page;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +21,18 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.util.List;
 
+@Api()
 @Validated
 @RestController
 public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @ApiOperation("Get Product by id")
+    @ApiResponses({
+            @ApiResponse(code=200,message="成功"),
+            @ApiResponse(code=400,message="找不到該產品")
+    })
     @GetMapping(value = "/products/{productId}",produces = {"application/json;charset=UTF-8"})
     public ResponseEntity<Product> getProduct(@PathVariable Integer productId){
         Product product = productService.getProductById(productId);
@@ -32,13 +42,23 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+
+    @ApiOperation("Create Product")
+    @ApiResponses({
+            @ApiResponse(code=201,message="新增成功"),
+            @ApiResponse(code=400,message="新增失敗")
+    })
     @PostMapping(value = "/products",produces = {"application/json;charset=UTF-8"})
     public ResponseEntity<Product> createProduct(@RequestBody @Valid ProductRequest productRequest){
         Integer productId = productService.createProduct(productRequest);
         Product product = productService.getProductById(productId);
         return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
-
+    @ApiOperation("Update Product")
+    @ApiResponses({
+            @ApiResponse(code=200,message="更新成功"),
+            @ApiResponse(code=404,message="沒有該產品")
+    })
     @PutMapping(value = "/products/{productId}",produces = {"application/json;charset=UTF-8"})
     public ResponseEntity<Product> updateProduct(@PathVariable Integer productId,@RequestBody @Valid ProductRequest productRequest){
         //check product already exist
@@ -51,13 +71,20 @@ public class ProductController {
         Product updateProduct = productService.getProductById(productId);
         return ResponseEntity.status(HttpStatus.OK).body(updateProduct);
     }
-
+    @ApiOperation("Delete Product")
+    @ApiResponses({
+            @ApiResponse(code=204,message="已被刪除"),
+    })
     @DeleteMapping(value = "/products/{productId}",produces = {"application/json;charset=UTF-8"})
     public ResponseEntity<?> deleteProduct(@PathVariable Integer productId){
         productService.deleteProduct(productId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
+    @ApiOperation("Get Products")
+    @ApiResponses({
+            @ApiResponse(code=200,message="取得成功"),
+            @ApiResponse(code=404,message="沒有該產品")
+    })
     @GetMapping(value = "/products",produces = {"application/json;charset=UTF-8"})
     public ResponseEntity<Page<Product>> getProducts(
             //query condition
