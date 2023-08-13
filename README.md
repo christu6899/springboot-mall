@@ -35,3 +35,11 @@ Example:`http://localhost/endpoint`
 ### 資料庫連接設定
 
 - 資料庫使用Mysql，透過spring jdbc撰寫純SQL Query操作資料庫中的數據。
+
+## 部屬
+
+### Local部屬
+
+下載docker compose中的三個檔案，並放在同個資料夾，確認電腦中有安裝docker compose。
+執行以下指令:
+`docker compose up -d`
