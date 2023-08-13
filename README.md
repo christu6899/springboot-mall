@@ -24,7 +24,7 @@
 
 #### 取得 API 服務資料示範 URL
 
-Example:`http://localhost/endpoint`
+Example:`http://localhost/api/endpoint`
 
 ![image](https://github.com/christu6899/springboot-mall/blob/main/API%20DOC.png
 )
